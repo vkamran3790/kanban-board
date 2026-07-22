@@ -1,0 +1,456 @@
+🟢 DOM & Events
+🔥 1. event.preventDefault()
+
+📌 ساختار
+
+event.preventDefault();
+
+💡 معنی
+
+رفتار پیش‌فرض مرورگر را متوقف می‌کند.
+
+یعنی به مرورگر می‌گوییم:
+
+کاری که معمولاً بعد از این Event انجام می‌دهی را انجام نده.
+
+🧪 مثال
+
+taskForm.addEventListener("submit", (event)=>{
+
+    event.preventDefault();
+
+});
+
+در فرم‌ها به صورت پیش‌فرض بعد از Submit صفحه Refresh می‌شود.
+
+با preventDefault() جلوی Refresh را می‌گیریم.
+
+🎯 کاربرد در پروژه
+
+استفاده در:
+
+فرم اضافه کردن Task
+فرم Login
+فرم Search
+Drag & Drop
+
+مثلاً در Kanban:
+
+dragover
+
+بدون آن Drop کار نمی‌کند.
+
+🔥 2. event.stopPropagation()
+
+📌 ساختار
+
+event.stopPropagation();
+
+💡 معنی
+
+جلوگیری از انتقال Event به عناصر والد.
+
+یعنی:
+
+این Event همینجا تمام شود و به Parent نرسد.
+
+🧪 مثال
+
+editBtn.addEventListener("click",(event)=>{
+
+    event.stopPropagation();
+
+    openEditModal(task);
+
+});
+
+🎯 کاربرد در پروژه
+
+در Kanban:
+
+کارت خودش Event کلیک دارد:
+
+card.addEventListener("click")
+
+که Modal جزئیات را باز می‌کند.
+
+اما دکمه Edit داخل کارت است.
+
+اگر:
+
+stopPropagation()
+
+نباشد:
+
+Click Edit
+
+↓
+
+Edit Modal باز می‌شود
+
+↓
+
+Task Details Modal هم باز می‌شود
+
+با stopPropagation فقط Edit اجرا می‌شود.
+
+🔥 3. dataset
+
+📌 ساختار
+
+HTML:
+
+<div data-status="doing"></div>
+
+JavaScript:
+
+element.dataset.status
+
+💡 معنی
+
+برای خواندن و ذخیره کردن اطلاعات سفارشی داخل HTML استفاده می‌شود.
+
+🧪 مثال
+
+HTML:
+
+<div class="task-list" data-status="todo"></div>
+
+JavaScript:
+
+list.dataset.status;
+
+خروجی:
+
+"todo"
+
+🎯 کاربرد در پروژه
+
+در Kanban برای فهمیدن وضعیت ستون:
+
+task.status = list.dataset.status;
+
+یعنی:
+
+اگر کارت داخل ستون Doing رفت:
+
+task.status="doing"
+🟢 Drag & Drop API
+🔥 4. dataTransfer.setData()
+
+📌 ساختار
+
+event.dataTransfer.setData(
+"type",
+"value"
+);
+
+💡 معنی
+
+اطلاعاتی را هنگام Drag ذخیره می‌کند تا هنگام Drop بتوانیم دریافت کنیم.
+
+🧪 مثال
+
+event.dataTransfer.setData(
+"text/plain",
+task.id
+);
+
+اینجا:
+
+id کارت
+
+ذخیره می‌شود.
+
+🎯 کاربرد در پروژه
+
+در Kanban:
+
+وقتی کارت را می‌کشیم:
+
+Task ID
+   ↓
+dataTransfer
+   ↓
+Drop
+
+بعداً با:
+
+getData()
+
+آن را دریافت می‌کنیم.
+
+🔥 5. dataTransfer.getData()
+
+📌 ساختار
+
+event.dataTransfer.getData("type")
+
+💡 معنی
+
+اطلاعاتی که هنگام Drag ذخیره شده را دریافت می‌کند.
+
+🧪 مثال
+
+const taskId =
+Number(
+event.dataTransfer.getData("text/plain")
+);
+
+🎯 کاربرد در پروژه
+
+برای پیدا کردن Task که جابه‌جا شده:
+
+const task = tasks.find(
+(item)=>item.id===taskId
+);
+🟢 String Methods
+🔥 6. replace()
+
+📌 ساختار
+
+string.replace(old,new)
+
+💡 معنی
+
+یک قسمت از String را تغییر می‌دهد یا حذف می‌کند.
+
+🧪 مثال
+
+let text="Hello World";
+
+text.replace("World","JS");
+
+نتیجه:
+
+Hello JS
+
+برای حذف:
+
+text.replace("Hello","");
+
+نتیجه:
+
+World
+
+🎯 کاربرد در پروژه
+
+برای:
+
+تغییر متن‌ها
+پاک کردن کاراکترها
+فرمت کردن داده‌ها
+🟢 Array Methods
+🔥 7. find()
+
+📌 ساختار
+
+array.find(callback)
+
+💡 معنی
+
+اولین آیتمی که شرط را درست کند برمی‌گرداند.
+
+🧪 مثال
+
+const user = users.find((item)=>{
+
+    return item.id===5;
+
+});
+
+نتیجه:
+
+{
+ id:5,
+ name:"Ali"
+}
+
+🎯 کاربرد در پروژه
+
+پیدا کردن Task هنگام Drag:
+
+const task = tasks.find((item)=>{
+
+return item.id===taskId;
+
+});
+🔥 8. filter()
+
+📌 ساختار
+
+array.filter(callback)
+
+💡 معنی
+
+چندین آیتم که شرط را دارند برمی‌گرداند.
+
+🧪 مثال
+
+const highTasks = tasks.filter((task)=>{
+
+return task.priority==="high";
+
+});
+
+نتیجه:
+
+همه Taskهای High.
+
+🎯 کاربرد در پروژه
+
+حذف Task:
+tasks = tasks.filter((item)=>{
+
+return item.id !== task.id;
+
+});
+Search:
+tasks.filter((task)=>{
+
+return task.title.includes(search);
+
+});
+🔥 9. splice()
+
+📌 ساختار
+
+array.splice(start, deleteCount, item)
+
+💡 معنی
+
+برای حذف، اضافه کردن یا جابه‌جایی آیتم‌ها استفاده می‌شود.
+
+🧪 مثال حذف
+
+tasks.splice(2,1);
+
+یعنی:
+
+از index 2
+
+یک آیتم حذف کن.
+
+🧪 مثال اضافه کردن
+
+tasks.splice(1,0,newTask);
+
+یعنی:
+
+در index 1
+
+چیزی حذف نکن
+
+و اضافه کن.
+
+🎯 کاربرد در پروژه
+
+Drag داخل ستون:
+
+tasks.splice(draggedIndex,1);
+
+tasks.splice(targetIndex,0,draggedTask);
+🔥 10. includes()
+
+📌 ساختار
+
+string.includes(value)
+
+یا
+
+array.includes(value)
+
+💡 معنی
+
+بررسی می‌کند یک مقدار وجود دارد یا نه.
+
+🧪 مثال
+
+"javascript".includes("script");
+
+خروجی:
+
+true
+
+🎯 کاربرد در پروژه
+
+Search:
+
+task.title
+.toLowerCase()
+.includes(searchText)
+
+یعنی:
+
+آیا عنوان Task شامل متن جستجو هست؟
+
+🟢 Object & Date
+🔥 11. Date.now()
+
+📌 ساختار
+
+Date.now()
+
+💡 معنی
+
+زمان فعلی را به صورت عدد برمی‌گرداند.
+
+🧪 مثال
+
+const task = {
+
+id: Date.now(),
+
+title:"Learn JS"
+
+}
+
+خروجی:
+
+id:1723456789000
+
+🎯 کاربرد در پروژه
+
+ساخت ID منحصر به فرد برای Task:
+
+const newTask={
+id:Date.now(),
+title:title
+}
+
+هر Task یک شناسه متفاوت می‌گیرد.
+
+🟢 Event Object
+🔥 12. event.target.tagName
+
+📌 ساختار
+
+event.target.tagName
+
+💡 معنی
+
+نام تگ HTML که کاربر روی آن کلیک کرده را می‌دهد.
+
+🧪 مثال
+
+card.addEventListener("click",(event)=>{
+
+console.log(event.target.tagName);
+
+});
+
+اگر روی Button کلیک شود:
+
+"BUTTON"
+
+اگر روی عنوان کلیک شود:
+
+"H3"
+
+🎯 کاربرد در پروژه
+
+جلوگیری از باز شدن Modal هنگام کلیک روی دکمه‌ها:
+
+if(event.target.tagName==="BUTTON"){
+    return;
+}

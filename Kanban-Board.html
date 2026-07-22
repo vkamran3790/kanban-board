@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../kanban board/Kanban-Board.css">
+</head>
+<style>
+    .div {
+        width: 300px;
+        height: 130px;
+        background-color: rgba(201, 47, 178, 0.833);
+        border-radius: 50px;
+        border: 3px solid rgb(226, 71, 164);
+    }
+
+    .p {
+        color: rgb(255, 255, 255);
+        font-size: 20px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="div">
+        <p class="p">1405/4/29</p>
+        <p class="p">Kanban Board</p>
+    </div>
+    <hr>
+
+    <header class="header">
+
+        <h1 class="title">Kanban Board</h1>
+
+        <button id="theme-btn">🌙 Dark Mode</button>
+
+        <form class="task-form">
+
+            <input id="search-input" type="text" placeholder="Search tasks...">
+
+            <select id="filter-priority">
+                <option value="all">All</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+
+            <input id="task-title" type="text" placeholder="Task title">
+
+            <select id="priority">
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+
+            <select id="sort-select">
+                <option value="default">Default</option>
+                <option value="date-new">Newest</option>
+                <option value="date-old">Oldest</option>
+                <option value="priority">Priority</option>
+            </select>
+
+            <input id="due-date" type="date">
+
+            <button class="add-task-btn">Add Task</button>
+        </form>
+    </header>
+
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal">
+            <button class="close-edit">×</button>
+
+            <h2>
+                Edit Task
+            </h2>
+
+            <input id="edit-title">
+
+            <select id="edit-priority">
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+
+            <input id="edit-date" type="date">
+
+            <button id="save-edit">Save</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal">
+            <button class="close-modal">×</button>
+
+            <h2 id="modal-title">Task Title</h2>
+
+            <p id="modal-priority"></p>
+            <p id="modal-date"></p>
+            <p id="modal-status"></p>
+        </div>
+    </div>
+
+    <main class="board">
+
+        <section class="column" id="todo-column">
+            <div class="column-header">
+                <h2>To Do</h2>
+                <span class="task-count">0</span>
+            </div>
+
+            <div class="task-list" data-status="todo"></div>
+        </section>
+
+
+        <section class="column" id="doing-column">
+            <div class="column-header">
+                <h2>Doing</h2>
+                <span class="task-count">0</span>
+            </div>
+
+            <div class="task-list" data-status="doing"></div>
+        </section>
+
+
+        <section class="column" id="done-column">
+            <div class="column-header">
+                <h2>Done</h2>
+                <span class="task-count">0</span>
+            </div>
+
+            <div class="task-list" data-status="done"></div>
+        </section>
+
+    </main>
+
+    <script src="../kanban board/Kanban-Board.js"></script>
+</body>
+
+</html>
